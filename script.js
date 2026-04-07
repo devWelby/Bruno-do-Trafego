@@ -1,21 +1,74 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const APP_CONFIG = {
+        whatsappPhone: "5585999999999",
+        defaultWhatsappMessage: "Olá! Gostaria de uma consultoria gratuita da Agência Sabre.",
+        social: {
+            instagram: "https://instagram.com/",
+            whatsapp: "https://wa.me/5585999999999"
+        }
+    };
+
+    const openWhatsApp = (message) => {
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://wa.me/${APP_CONFIG.whatsappPhone}?text=${encodedMessage}`;
+        window.open(url, "_blank", "noopener,noreferrer");
+    };
+
+    const setSocialLinks = () => {
+        const instagramLink = document.getElementById("instagramLink");
+        const footerWhatsappLink = document.getElementById("footerWhatsappLink");
+
+        if (instagramLink) {
+            instagramLink.href = APP_CONFIG.social.instagram;
+        }
+
+        if (footerWhatsappLink) {
+            footerWhatsappLink.href = APP_CONFIG.social.whatsapp;
+        }
+    };
+
+    setSocialLinks();
+
     // --- MENU MOBILE TOGGLE ---
-    const menuToggle = document.querySelector(".menu-toggle");
-    const navUl = document.querySelector("nav ul");
+    const menuToggle = document.getElementById("menuToggle");
+    const navUl = document.getElementById("nav-menu");
     const navLinks = document.querySelectorAll("nav ul li a");
 
-    if (menuToggle) {
+    const closeMenu = () => {
+        if (!menuToggle || !navUl) return;
+        menuToggle.classList.remove("active");
+        navUl.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
+    };
+
+    const openMenu = () => {
+        if (!menuToggle || !navUl) return;
+        menuToggle.classList.add("active");
+        navUl.classList.add("active");
+        menuToggle.setAttribute("aria-expanded", "true");
+    };
+
+    if (menuToggle && navUl) {
         menuToggle.addEventListener("click", () => {
-            menuToggle.classList.toggle("active");
-            navUl.classList.toggle("active");
+            const isOpen = navUl.classList.contains("active");
+            if (isOpen) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
         });
 
         // Fechar menu ao clicar em um link
-        navLinks.forEach(link => {
+        navLinks.forEach((link) => {
             link.addEventListener("click", () => {
-                menuToggle.classList.remove("active");
-                navUl.classList.remove("active");
+                closeMenu();
             });
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeMenu();
+            }
         });
     }
 
@@ -24,11 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (whatsappBtn) {
         whatsappBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            // Número de WhatsApp aqui (com código do país)
-            const phoneNumber = "5585999999999"; // Substitua pelos números reais
-            const message = "Olá! Gostaria de uma consultoria gratuita da Agência Sabre.";
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
+            openWhatsApp(APP_CONFIG.defaultWhatsappMessage);
         });
     }
 
@@ -40,6 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const nome = document.getElementById("nome").value.trim();
             const email = document.getElementById("email").value.trim();
+            const telefone = document.getElementById("telefone").value.trim();
+            const empresa = document.getElementById("empresa").value.trim();
             const mensagem = document.getElementById("mensagem").value.trim();
 
             // Validações básicas
@@ -59,9 +110,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Se validações passarem, enviar para WhatsApp
-            const phoneNumber = "5585999999999"; // Substitua pelos números reais
-            const fullMessage = `*Nome:* ${nome}%0A*E-mail:* ${email}%0A%0A*Mensagem:*%0A${encodeURIComponent(mensagem)}`;
-            window.open(`https://wa.me/${phoneNumber}?text=${fullMessage}`, "_blank");
+            const linhas = [
+                "Olá! Vim pelo site da Agência Sabre.",
+                "",
+                `Nome: ${nome}`,
+                `E-mail: ${email}`,
+                `Telefone: ${telefone || "Não informado"}`,
+                `Empresa: ${empresa || "Não informada"}`,
+                "",
+                "Mensagem:",
+                mensagem
+            ];
+
+            openWhatsApp(linhas.join("\n"));
 
             // Limpar formulário após envio
             mainForm.reset();
@@ -127,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- SMOOTH SCROLLING ---
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    document.querySelectorAll('a[href^="#"]:not(.whatsapp-float)').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
             const href = this.getAttribute("href");
             if (href === "#") return;
@@ -189,8 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- FECHAR MENU AO CLICAR FORA ---
     document.addEventListener("click", (e) => {
         if (menuToggle && navUl && !e.target.closest("nav")) {
-            menuToggle.classList.remove("active");
-            navUl.classList.remove("active");
+            closeMenu();
         }
     });
 });
