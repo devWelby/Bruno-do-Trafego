@@ -216,6 +216,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 newHeight = 280;
             }
 
+            if (window.innerWidth <= 480) {
+                newWidth = Math.min(newWidth, 220);
+                newHeight = Math.min(newHeight, 220);
+            } else if (window.innerWidth <= 768) {
+                newWidth = Math.min(newWidth, 260);
+                newHeight = Math.min(newHeight, 260);
+            }
+
             if (container) {
                 container.style.width = `${newWidth}px`;
                 container.style.height = `${newHeight}px`;
@@ -239,6 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (slides.length > 0) {
         setInterval(nextSlide, 3500);
+
+        window.addEventListener("resize", () => {
+            adjustContainerSize(slides[currentSlide]);
+        });
     }
 
     // --- SMOOTH SCROLLING ---
