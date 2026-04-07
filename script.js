@@ -2,9 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const APP_CONFIG = {
         whatsappPhone: "5585999999999",
         defaultWhatsappMessage: "Olá! Gostaria de uma consultoria gratuita da Agência Sabre.",
+        ga4MeasurementId: "G-XXXXXXXXXX",
+        metaPixelId: "000000000000000",
         social: {
             instagram: "https://instagram.com/",
             whatsapp: "https://wa.me/5585999999999"
+        }
+    };
+
+    const trackEvent = (eventName, params = {}) => {
+        if (typeof window.gtag === "function") {
+            window.gtag("event", eventName, params);
+        }
+
+        if (typeof window.fbq === "function") {
+            window.fbq("trackCustom", eventName, params);
         }
     };
 
@@ -28,6 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     setSocialLinks();
+
+    trackEvent("analytics_config_loaded", {
+        ga4_id: APP_CONFIG.ga4MeasurementId,
+        pixel_id: APP_CONFIG.metaPixelId
+    });
 
     // --- MENU MOBILE TOGGLE ---
     const menuToggle = document.getElementById("menuToggle");
@@ -77,9 +94,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (whatsappBtn) {
         whatsappBtn.addEventListener("click", (e) => {
             e.preventDefault();
+            trackEvent("whatsapp_click", {
+                source: "floating_button"
+            });
             openWhatsApp(APP_CONFIG.defaultWhatsappMessage);
         });
     }
+
+    const footerWhatsappLink = document.getElementById("footerWhatsappLink");
+    if (footerWhatsappLink) {
+        footerWhatsappLink.addEventListener("click", () => {
+            trackEvent("whatsapp_click", {
+                source: "footer_link"
+            });
+        });
+    }
+
+    const trackedCtas = {
+        ctaHeroPrimary: "cta_hero_primary",
+        ctaHeroServices: "cta_hero_services",
+        ctaPortfolioMore: "cta_portfolio_more",
+        ctaConsultoriaBanner: "cta_consultoria_banner",
+        ctaFormSubmit: "cta_form_submit"
+    };
+
+    Object.entries(trackedCtas).forEach(([id, label]) => {
+        const element = document.getElementById(id);
+        if (!element) return;
+
+        element.addEventListener("click", () => {
+            trackEvent("cta_click", {
+                cta_label: label
+            });
+        });
+    });
 
     // --- VALIDAÇÃO DO FORMULÁRIO ---
     const mainForm = document.querySelector(".main-form");
@@ -121,6 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Mensagem:",
                 mensagem
             ];
+
+            trackEvent("generate_lead", {
+                source: "contact_form",
+                has_phone: Boolean(telefone),
+                has_company: Boolean(empresa)
+            });
 
             openWhatsApp(linhas.join("\n"));
 

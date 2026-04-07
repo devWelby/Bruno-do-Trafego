@@ -7,11 +7,83 @@
     <meta name="keywords" content="tráfego pago, marketing digital, agência digital, social media, Google Ads, Facebook Ads">
     <meta name="author" content="Agência Sabre">
     <meta name="theme-color" content="#00ffae">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Agência Sabre | Tráfego Pago e Gestão Digital Estratégica">
+    <meta property="og:description" content="Agência especializada em tráfego pago, social media e posicionamento digital para negócios locais.">
+    <meta property="og:url" content="https://www.seudominio.com.br/">
+    <meta property="og:image" content="https://www.seudominio.com.br/Sabre/LogoG.png.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Agência Sabre | Tráfego Pago e Gestão Digital Estratégica">
+    <meta name="twitter:description" content="Transformamos presença digital em vendas com estratégia, tráfego e performance.">
+    <meta name="twitter:image" content="https://www.seudominio.com.br/Sabre/LogoG.png.png">
+    <link rel="canonical" href="https://www.seudominio.com.br/">
     <title>Agência Sabre | Tráfego Pago e Gestão Digital Estratégica</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics 4: substitua G-XXXXXXXXXX pelo seu Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-XXXXXXXXXX");
+    </script>
+
+    <!-- Meta Pixel: substitua 000000000000000 pelo seu Pixel ID -->
+    <script>
+        !(function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = true;
+            n.version = "2.0";
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = true;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+        fbq("init", "000000000000000");
+        fbq("track", "PageView");
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Agência Sabre",
+            "description": "Agência de tráfego pago e marketing digital com foco em geração de leads e vendas para negócios locais.",
+            "url": "https://www.seudominio.com.br/",
+            "image": "https://www.seudominio.com.br/Sabre/LogoG.png.png",
+            "telephone": "+55 85 99999-9999",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rua Exemplo, 123",
+                "addressLocality": "Fortaleza",
+                "addressRegion": "CE",
+                "postalCode": "60000-000",
+                "addressCountry": "BR"
+            },
+            "sameAs": [
+                "https://instagram.com/"
+            ],
+            "priceRange": "$$",
+            "areaServed": "BR"
+        }
+    </script>
 </head>
 <body>
+    <noscript>
+        <img height="1" width="1" style="display:none" alt=""
+            src="https://www.facebook.com/tr?id=000000000000000&ev=PageView&noscript=1">
+    </noscript>
 
     <header id="header">
         <div class="container header-content">
@@ -40,8 +112,8 @@
                 <h1>Presença Digital <span class="neon-text">Estratégica</span></h1>
                 <p>Mais do que executar tarefas, gerimos sua empresa na internet alinhando posicionamento, visibilidade e vendas.</p>
                 <div class="cta-group">
-                    <a href="#consultoria" class="btn-primary">Quero vender mais</a>
-                    <a href="#servicos" class="btn-secondary">Conhecer serviços</a>
+                    <a href="#consultoria" class="btn-primary" id="ctaHeroPrimary">Quero vender mais</a>
+                    <a href="#servicos" class="btn-secondary" id="ctaHeroServices">Conhecer serviços</a>
                 </div>
             </div>
             <div class="hero-img">
@@ -120,7 +192,7 @@
             </div>
             
             <div class="portfolio-cta">
-                <a href="#contato" class="btn-secondary">Ver mais projetos</a>
+                <a href="#contato" class="btn-secondary" id="ctaPortfolioMore">Ver mais projetos</a>
             </div>
         </div>
     </section>
@@ -199,7 +271,7 @@
                 <h2>Quer saber como está sua presença digital?</h2>
                 <p>Ganhe uma <strong>Análise de Perfil Gratuita</strong> e descubra onde você está perdendo vendas.</p>
             </div>
-            <a href="#contato" class="btn-black">Quero minha análise</a>
+            <a href="#contato" class="btn-black" id="ctaConsultoriaBanner">Quero minha análise</a>
         </div>
     </section>
 
@@ -230,7 +302,7 @@
                         <label for="mensagem">✓ Mensagem / Dúvida</label>
                         <textarea id="mensagem" name="mensagem" rows="5" placeholder="Conte-nos como podemos ajudar seu negócio..." required minlength="10"></textarea>
                     </div>
-                    <button type="submit" class="btn-form">📲 Enviar via WhatsApp</button>
+                    <button type="submit" class="btn-form" id="ctaFormSubmit">📲 Enviar via WhatsApp</button>
                 </form>
             </div>
         </div>

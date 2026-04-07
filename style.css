@@ -698,14 +698,20 @@ footer {
         display: inline-flex;
     }
 
+    /* Fix: position nav as static so its child ul is placed relative to the fixed header */
+    nav {
+        position: static;
+    }
+
     nav ul {
         position: absolute;
-        top: calc(100% + 10px);
+        top: 100%;
         left: -100vw;
-        width: min(92vw, 360px);
+        width: 100%;
         background: rgba(20, 20, 20, 0.98);
-        border: 1px solid rgba(0, 255, 174, 0.2);
-        border-radius: 10px;
+        border-top: 1px solid rgba(0, 255, 174, 0.2);
+        border-bottom: 1px solid rgba(0, 255, 174, 0.2);
+        border-radius: 0;
         flex-direction: column;
         align-items: flex-start;
         padding: 18px;
@@ -715,6 +721,23 @@ footer {
 
     nav ul.active {
         left: 0;
+    }
+
+    .hero {
+        padding-top: 100px;
+        padding-bottom: 50px;
+        min-height: auto;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-text {
+        min-width: unset;
+        width: 100%;
     }
 
     .hero-text h1 {
@@ -735,8 +758,35 @@ footer {
         order: -1;
     }
 
+    .floating-logo {
+        max-width: 240px;
+        animation: none;
+    }
+
+    #servicos,
+    #portfolio,
+    #depoimentos,
+    #sobre,
+    .contact-section {
+        padding: 56px 0;
+    }
+
+    .pattern-bg {
+        padding: 64px 0;
+    }
+
     .split-screen {
         flex-direction: column-reverse;
+    }
+
+    .slideshow-wrapper {
+        min-height: auto;
+        width: 100%;
+    }
+
+    .slideshow-container {
+        width: 240px;
+        height: 240px;
     }
 
     .portfolio-grid {
